@@ -45,13 +45,13 @@ $ docker start -a -i multitls-client
 #### VM-Server
 
 ```
-	multiTLS -s <port-number> <number-of-tunnels> <cert-1> <cafile-1> <cert-2> <cafile-2>
+$ multiTLS -s <port-number> <number-of-tunnels> <cert-1> <cafile-1> <cert-2> <cafile-2>
 ```
 
 #### VM-Client
 
 ```
-	multiTLS -c <port-number> <number-of-tunnels> <IPServer> <cert-1> <cafile-1> <cert-2> <cafile-2>
+$ multiTLS -c <port-number> <number-of-tunnels> <IPServer> <cert-1> <cafile-1> <cert-2> <cafile-2>
 ```
 
 
@@ -61,13 +61,13 @@ $ docker start -a -i multitls-client
 In the server container with an IP address **192.169.1.1** execute: 
 
 ```
-	multiTLS -s 11444 2 cert-1.pem cafile-1.crt cert-2.pem cafile-2.ctr
+$ multiTLS -s 11444 2 cert-1.pem cafile-1.crt cert-2.pem cafile-2.ctr
 ```
 
 In the client container execute:
 
 ```
-	multiTLS -c 11444 2 192.169.1.1 cert-1.pem cafile-1.crt cert-2.pem cafile-2.ctr
+$ multiTLS -c 11444 2 192.169.1.1 cert-1.pem cafile-1.crt cert-2.pem cafile-2.ctr
 ```
 
 ### Example of an ECHO Application
@@ -75,13 +75,13 @@ In the client container execute:
 In the server container with an IP address **192.169.1.1** execute: 
 
 ```
-	socat - tcp-listen:11445
+$ socat - tcp-listen:11445
 ```
 
 In the client container execute:
 
 ```
-	socat tcp:192.169.1.1:11445 echo
+$ socat tcp:192.169.1.1:11445 echo
 ```
 
 
