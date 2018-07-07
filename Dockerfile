@@ -14,8 +14,6 @@ RUN cd openssl-1.1.0g && \
     ./config && \
     make && \ 
     make clean && \
-    #make test && \
-    #make clean && \
     make install
 
 RUN wget http://www.dest-unreach.org/socat/download/socat-1.7.3.2.tar.gz 
