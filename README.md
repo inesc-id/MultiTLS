@@ -1,6 +1,7 @@
 # MultiTLS command line interface
 
-One Paragraph of project description goes here
+MultiTLS is a middleware based on diversity and tunneling mechanisms that allows keeping communication channels secure even when new vulnerabilities are discovered. 
+MultiTLS creates a secure communication channel through the encapsulation of *k* TLS channels, where each one uses a different cipher suite. 
 
 ## Getting Started
 
@@ -8,7 +9,8 @@ Secure channel with cipher diversity
 
 ### Prerequisites
 
-Docker
+- Linux
+- Docker
 
 ### Installing
 
