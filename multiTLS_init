@@ -1,0 +1,19 @@
+#!/bin/bash
+
+while [ 1==1 ]
+do
+	#clear
+	echo -e " Menu "
+	echo -e "1 - Install \n2 - Start server mode \n3 - Start client mode \n4 - Uninstall \n5 - Quit "
+
+	read -p "Select the option number: " option
+
+	case $option in
+		'1') ./multiTLS_install;; #Install
+		'2') ./multiTLS_server_config;; #Server
+		'3') ./multiTLS_client_config;; #Client
+		'4') ./multiTLS_uninstall;; #Uninstall
+		'5') exit;; #Quit
+	esac
+
+done

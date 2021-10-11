@@ -1,0 +1,49 @@
+#!/bin/bash
+################ Removing Old Files ##########################
+rm Suite1/*
+################# Create Certificate ########################
+openssl ecparam -name secp521r1 -genkey -param_enc explicit -out Suite1/private-key.key
+openssl req -new -x509 -key Suite1/private-key.key -out Suite1/server.crt -days 730
+chmod 777 Suite1/private-key.key
+cat Suite1/private-key.key > Suite1/server.pem
+cat Suite1/server.crt >> Suite1/server.pem
+
+
+nc -q 1 -l 4040 > temp/temp_File.txt #wait for config file
+
+cat temp/temp_File.txt
+
+read -r line < temp/temp_File.txt
+
+IFS='|'
+read -ra arr <<< "$line"
+
+#server_IP=${arr[0]}
+client_IP=${arr[0]}
+port_number=${arr[1]}
+tunnel_number=${arr[2]}
+
+#echo $server_IP
+echo $client_IP
+echo $port_number
+echo $tunnel_number
+
+nc -q 0 $client_IP 4040 < Suite1/server.crt #send crt to client
+#nc -q 1 $client_IP 8000 < temp/temp_File.txt
+echo "certificate sent"
+nc -q 0 -l 4040 > Suite1/client.crt #wait for client crt
+echo "client crt arrived"
+rm temp/temp_File.txt
+echo "finished"
+
+
+
+
+
+
+
+################# End Certificate Exchange #################
+
+
+
+sudo ./multiTLS_server_start $port_number $tunnel_number

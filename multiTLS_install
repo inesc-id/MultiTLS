@@ -1,0 +1,29 @@
+#!/bin/bash
+
+echo "Installing MultiTLS Dependencies..."
+
+apt-get update
+
+apt-get install -y build-essential
+
+apt-get install -y wget
+
+echo "Installing OpenSSL..."
+wget --no-check-certificate https://www.openssl.org/source/openssl-1.1.1k.tar.gz
+tar -zxvf openssl-1.1.1k.tar.gz
+cd openssl-1.1.1k && \
+    ./config && \
+    make && \
+    make clean && \
+    make install
+
+echo "Installing Socat..."
+wget http://www.dest-unreach.org/socat/download/socat-1.7.4.1.tar.gz
+tar -zxvf socat-1.7.4.1.tar.gz
+cd socat-1.7.4.1 && \
+    ./configure && \
+    make && \
+    make install
+
+echo "MultiTLS dependencies are now installed!"
+echo "You can now proceed with the configuration in server mode or client mode."

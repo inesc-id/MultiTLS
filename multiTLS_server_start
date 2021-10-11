@@ -1,0 +1,64 @@
+#!/bin/bash
+
+#First suite
+certS0="Suite1/server.pem"
+cafileS0="Suite1/client.crt"
+certC0="Suite1/client.pem"
+cafileC0="Suite1/server.crt"
+cipher0="ECDHE-ECDSA-CHACHA20-POLY1305"
+
+#Second suite
+certS1="Suite2/RSAServer.pem"
+cafileS1="Suite2/RSAClient.crt"
+certC1="Suite2/RSAClient.pem"
+cafileC1="Suite2/RSAServer.crt"
+cipher1="AES128-CCM8"
+
+#Third suite
+certS2="Suite3/DSAServer.pem"
+cafileS2="Suite3/DSAClient.crt"
+certC2="Suite3/DSAClient.pem"
+cafileC2="Suite3/DSAServer.crt"
+cipher2="DHE-DSS-CAMELLIA256-SHA256"
+
+#Fourth suite
+certS3="Suite4/RSAServer.pem"
+cafileS3="Suite4/RSAClient.crt"
+certC3="Suite4/RSAClient.pem"
+cafileC3="Suite4/RSAServer.crt"
+cipher3="ECDHE-RSA-AES256-GCM-SHA384"
+
+
+	port="$1"
+	nTunnels="$2"
+
+	i=0
+	while (( $i < $nTunnels ))
+	do
+
+		j=$(($i + 1))
+		rest=$(( $i % 4 ))
+
+		#connection option
+		auxPort=$(($port - $nTunnels + $j))
+
+		#openSSL --- options for socat
+		auxCert=certS$rest
+		auxCafile=cafileS$rest
+		auxCipher=cipher$rest
+
+		#TUN --- options for socat
+		nameTun="tun$j"
+		ipTun="10.$j.1.1"
+
+		#socat command
+		cmdSSLserver=openssl-listen:$auxPort,reuseaddr,cert=${!auxCert},cafile=${!auxCafile},cipher=${!auxCipher}
+		cmdTUNserver=TUN:$ipTun/24,tun-name=$nameTun,up
+		socat -d -d -d $cmdSSLserver $cmdTUNserver &
+
+		#tunnel_pid=$!
+		#echo "$tunnel_pid"
+
+		i=$(($i + 1))
+		sleep 1
+	done

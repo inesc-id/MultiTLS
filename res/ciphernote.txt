@@ -1,0 +1,4 @@
+1 suite EC secp521r1
+2 suite rsa 3072 bits
+3 Suite DSA 3072 bits
+4 Suite rsa 3072 bits

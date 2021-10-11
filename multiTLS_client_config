@@ -1,0 +1,53 @@
+#!/bin/bash
+################ Removing Old Files ##########################
+rm Suite1/*
+################ Create Certificate ########################
+openssl ecparam -name secp521r1 -genkey -param_enc explicit -out Suite1/private-key.key
+openssl req -new -x509 -key Suite1/private-key.key -out Suite1/client.crt -days 730
+chmod 777 Suite1/private-key.key
+cat Suite1/private-key.key > Suite1/client.pem
+cat Suite1/client.crt >> Suite1/client.pem
+
+read -p "Insert your IP Address: " client_IP
+read -p "Insert server Ip Address " server_IP
+read -p "Insert port number (ex: 4444): " port_number
+read -p "Insert number of tunnels (1-4): " tunnel_number
+
+session_settings=''
+#session_settings=$server_IP
+#session_settings+='|'
+session_settings+=$client_IP
+session_settings+='|'
+session_settings+=$port_number
+session_settings+='|'
+session_settings+=$tunnel_number
+
+echo $session_settings > temp/temp_File.txt
+
+echo "Sending session configuration..."
+
+nc -q 0 $server_IP 4040 < temp/temp_File.txt  #Sends session information
+echo 'session settings sent'
+nc -q 1 -l 4040 > Suite1/server.crt #wait for server crt
+
+nc -q 1 $server_IP 4040 < Suite1/client.crt #Send cert to server
+
+#nc -q 0 $server_IP 4040 < temp/temp_File.txt  #Sends session information
+#echo "hello"
+#nc -q 1 -l 4040 > Suite1/server.crt #wait for server crt
+#echo "cert from server arrived"
+#nc -q 0 $server_IP 4040 < Suite1/client.crt #Send cert to server
+
+#nc -q 1 -l 8000 > temp/temp_File.txt	#Wait for server confirmation
+rm temp/temp_File.txt
+echo "finished"
+
+sleep 1s
+
+
+
+
+
+################# End Certificate Exchange #################
+
+sudo ./multiTLS_client_start $port_number $tunnel_number $server_IP
