@@ -57,7 +57,6 @@ $ multiTLS -c <port-number> <number-of-tunnels> <IPServer> <cert-1> <cafile-1> <
 ```
 
 
-
 ### MultiTLS simpe execution example
 
 In the server container with an IP address **192.169.1.1** execute: 
@@ -87,15 +86,15 @@ $ socat tcp:192.169.1.1:11445 echo
 ```
 
 
-
 ## Built With
 
 * [OpenSSL](https://www.openssl.org) - The full-featured toolkit for the Transport Layer Security (TLS) and Secure Sockets Layer (SSL) protocols
-* [Socat](http://www.dest-unreach.org/socat/doc/socat.html) - Multipurpose relay (SOcket CAT)
+* [socat](http://www.dest-unreach.org/socat/doc/socat.html) - Multipurpose relay (SOcket CAT)
 
-## Authors
+## Contributors
 
 * **[Ricardo Moura](https://github.com/R3Moura)** - *Development of the protocol*
+* **[Ricardo Lopes](https://github.com/Ricardo996)** - *Improvements and maintenance*
 
 ## License
 
@@ -106,5 +105,3 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 * **[Prof. Miguel Correia](https://github.com/mpcorreia)** 
 * **[Prof. Miguel Pardal](https://github.com/miguelpardal)** 
 * **[David Matos](https://github.com/davidmatos)**
-
-
